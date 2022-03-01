@@ -19,7 +19,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState("");
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api
@@ -30,6 +31,16 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+    
+    api
+      .getCardsData()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   }, []);
 
   function handleEditAvatarClick() {
@@ -77,50 +88,36 @@ function App() {
       });
   }
 
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api
-      .getCardsData()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.makeLike(card._id, !isLiked).then((newCard) => {
+    api
+      .makeLike(card._id, !isLiked)
+      .then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleCardDelete(card) {
     api
       .deleteCardData(card._id)
       .then(() => {
-        setCards(
-          cards.filter((item) => {
-            if (item._id != card._id) {
-              return true;
-            } else {
-              return false;
-            }
-          })
-        );
-      })
+        setCards((cards) =>cards.filter((c) => c._id !== card._id));
+      })   
       .catch((err) => {
         console.log(err);
       });
   }
 
   function handleAddPlaceSubmit(name, link) {
-    api.makeNewCardData(name, link).then((newCard) => {
+    api
+    .makeNewCardData(name, link)
+    .then((newCard) => {
       setCards([newCard, ...cards]);
     })
     .catch((err) => {

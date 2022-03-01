@@ -32,7 +32,7 @@ function Card(props) {
   }
 
   return (
-    <div className="element" key={props.key}>
+    <div className="element">
       <button
         type="button"
         className="element__image-button"
@@ -40,7 +40,7 @@ function Card(props) {
       >
         <img
           className="element__picture"
-          alt="Картинка Элемента"
+          alt={"Картинка элемента - " + props.card.name}
           src={props.card.link}
         />
       </button>

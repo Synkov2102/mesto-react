@@ -24,10 +24,10 @@ if (props.card.link != undefined) {
         </button>
         <img
           className="popup__image"
-          alt="Картинка с карточки"
+          alt={"Картинка с карточки - " + props.card.name}
           src={props.card.link}
         />
-        <p className="popup__subtitle"></p>
+        <p className="popup__subtitle">{props.card.name}</p>
       </div>
     </div>
   );
