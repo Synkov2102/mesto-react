@@ -58,7 +58,7 @@ function Main(props) {
       <section className="elements">
         {props.cards.map((card) => {
           return (
-            <Card card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
+            <Card key={card._id} card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
           );
         })}
       </section>
