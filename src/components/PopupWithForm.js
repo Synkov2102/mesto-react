@@ -4,7 +4,7 @@ function PopupWithForm (props){
     return (
         <div className = {`popup ${props.isOpen ? 'popup_open' : ''}`}>
             <div className="popup__container">
-                <form className="popup__form" noValidate name={props.name} onSubmit={props.onSubmit}>
+                <form className="popup__form" name={props.name} onSubmit={props.onSubmit}>
                     <button type="button" onClick={props.onClose} className="popup__exit-button">
                         <img className="popup__exit-button-image" src={exitIconPath}
                         alt='Изображение кнопки "выйти"'/>
